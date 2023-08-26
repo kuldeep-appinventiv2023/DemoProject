@@ -1,0 +1,176 @@
+Admin {
+    adminId int PK
+    username String
+    password String
+    firstName String
+    lastName String
+    contactNumber String
+    email String
+    adminImage blob
+}
+
+Customer {
+    customerId int PK
+    firstName String
+    lastName String 
+    password String
+    contactNumber String 
+    email String 
+    DOB DateTime
+    gender String
+    CustomerImage blob
+    Address {
+        houseNo String
+        streetNo int
+        landmark String
+        city String
+        state String
+        pinCode int
+    }  
+}
+
+Session {
+  sessionId int PK  
+  customerId int FK references Customer
+  deviceId string
+  deviceType string
+  isActive Boolean // true , false
+}
+
+Resturant {
+    resturantId int PK
+    categoryId int FK references Categories
+    menuId int FK references Menu
+    resturantName String
+    resturantPhoneNo String
+    resturantPhoto blob 
+    openingTime Date
+    closingTime Date
+    Rating float
+    Address {
+        resturantNo String
+        streetNo int
+        landmark String
+        city String
+        state String
+        pinCode int
+    }    
+}
+
+Menu {
+    menuId int PK
+    categoryId int FK references Category
+    itemName String
+    price float  
+    image Blob
+    isAvailable boolean
+    que
+}
+
+Category{
+    categoryId int PK
+    categoryName String 
+    categoryImage Blob
+    categoryDescription String
+}
+
+Orders {
+    orderId int PK
+    customerId int FK references Customer
+    resturantId int FK references Resturant
+    staffId int FK references DeliveryStaff
+    AddressId int FK references Address
+    status Enum // inProgress, received, delivered
+    placeOrderDate Date
+    deliveryDate Date
+}
+
+DeliveryStaff {
+    staffId int PK
+    resturantId FK references Restaurant
+    firstName String
+    lastName String 
+    contactNumber String 
+    email String 
+    DOB DateTime
+    gender String 
+    isAvailable boolean
+}
+
+Review {
+    reviewId int PK 
+    customerId int FK references Customer
+    orderId int FK references Orders 
+    resturantId int FK references Resturant
+    staffId int FK references DeliveryStaff
+    resturantComment String 
+    deliveryComment String 
+    reviewDate Date
+}
+
+Payment {
+    paymentId int PK
+    customerId int FK references Customer
+    orderId int FK references Orders
+    paymentMethod Enum // COD, UPI, Card
+    paymentStatus Enum // pending, accepted, rejected
+    paymentDate Date
+}
+
+Food devlivery system project
+technology used nodeJs, expressJs, typeScript
+DataBaseUsed – MongoDB, Redis 
+
+(Admin APIs)
+
+Admin Schema:
+login Admin, view Profil, Update Profil, Delete Account
+
+Restaurant Schema:
+Add Restaurant, Get All Restaurants, Get Restaurant by ID, Get Restaurant by Categorie, Get Restaurant by cityName, Get Restaurant by Name, Update Restaurant, Delete Restaurant
+
+Menu Schema:
+Create Menu Item, Get All Menu Items, Get Menu Item by ID, Get Menu Items by ResturantName, Get Menu Items by Categorie, Update Menu Item, Delete Menu Item
+after menu search show all resturantName
+
+Category Schema:
+Create Category, Get All Categories, Get Category by ID, Get Category by Name, Update Category, Delete Category
+
+Delivery Staff Schema:
+Create Delivery Staff, Get All Delivery Staff, Get Delivery Staff by ID, Update Delivery Staff, Delete Delivery Staff
+
+Orders Schema:
+Get All Orders 
+Get Orders by Restaurant API
+Get Orders by Delivery Staff API:
+
+
+Review Schema:
+Get All Reviews, Get Review by ID, Update Review, Delete Review
+
+Payment Schema:
+Get All Payments, Get Payment by ID, Update Payment Status
+
+(Customer APIs)
+
+Customer Schema:
+signup Customer, login Customer, view Profil, Update Profil, Delete Account
+
+Orders Schema:
+Place Order, Get Orders by Customer, Get Order by ID, Cancel Order
+
+Review Schema:
+Add Review, update review, Get Reviews, Get Review by ID
+
+Payment Schema:
+add Payment, Get Payment, Get Payment by ID
+
+Main feature 
+Sync data of category, resturant, Menu and menuItem from Zomato APIs and using rabbitMq
+
+faceset data laga kar pagination 
+get data in pages (contains 10 dataset)
+and next ten so ends on 
+
+cart 
+menuItem id 
