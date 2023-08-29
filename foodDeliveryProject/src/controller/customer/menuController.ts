@@ -1,45 +1,48 @@
-import Menu from "../../models/menuModel";
+import { Request, Response } from 'express';
+import MenuService from '../../services/customer/menuServices';
 import { Constants } from '../../constants';
 
-class MenuService {
-  async getAllMenuItems() {
+class MenuController {
+  async getAllMenuItems(req: Request, res: Response) {
     try {
-      const allMenuItems = await Menu.find();
-      return allMenuItems;
+      const allMenuItems = await MenuService.getAllMenuItems();
+      res.status(200).json(allMenuItems);
     } catch (error) {
-      throw new Error(Constants.errorMsgs.fetchMenuItemsError);
+      res.status(500).json({ error: Constants.errorMsgs.error });
     }
   }
 
-  async getMenuItemById(menuItemId: string) {
+  async getMenuItemById(req: Request, res: Response) {
     try {
-      const menuItem = await Menu.findById(menuItemId);
-      if (!menuItem) {
-        throw new Error(Constants.errorMsgs.menuItemNotFound);
-      }
-      return menuItem;
+      const { menuItemId } = req.params;
+      const menuItem = await MenuService.getMenuItemById(menuItemId);
+      res.status(200).json(menuItem);
     } catch (error) {
-      throw new Error(Constants.errorMsgs.fetchMenuItemByIDError);
+      res.status(500).json({ error: Constants.errorMsgs.error });
     }
   }
 
-  async getMenuItemsByRestaurantName(restaurantName: string) {
+  async getMenuItemsByRestaurantName(req: Request, res: Response) {
+    const { restaurantName } = req.params;
+
     try {
-      const menuItems = await Menu.find({ restaurantName: { $regex: restaurantName, $options: 'i' } });
-      return menuItems;
-    } catch (error) {
-      throw new Error(Constants.errorMsgs.fetchMenuItemsByRestaurantError);
+      const menuItems = await MenuService.getMenuItemsByRestaurantName(restaurantName);
+      res.status(200).json(menuItems);
+    } 
+    catch (error) {
+      res.status(500).json({ error: Constants.errorMsgs.fetchMenuItemError});
     }
   }
 
-  async getMenuItemsByCategory(categoryId: string) {
+  async getMenuItemsByCategory(req: Request, res: Response) {
     try {
-      const menuItems = await Menu.find({ categoryId });
-      return menuItems;
+      const { categoryId } = req.params;
+      const menuItems = await MenuService.getMenuItemsByCategory(categoryId);
+      res.status(200).json(menuItems);
     } catch (error) {
-      throw new Error(Constants.errorMsgs.fetchMenuItemsByCategoryError);
+      res.status(500).json({ error: Constants.errorMsgs.error });
     }
   }
 }
 
-export default new MenuService();
+export default new MenuController();

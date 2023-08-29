@@ -11,6 +11,7 @@ interface Restaurant extends Document {
     Longitude: number;
     Latitude: number;
     Cuisines: string;
+    categoryId: mongoose.Types.ObjectId;
     averageCostForTwo: number;
     Currency: string;
     hasTableBooking: string;
@@ -32,6 +33,7 @@ const restaurantSchema = new mongoose.Schema<Restaurant>({
     Longitude: { type: Number },
     Latitude: { type: Number },
     Cuisines: { type: String },
+    categoryId: { type: mongoose.Schema.Types.ObjectId, ref: 'Category' },
     averageCostForTwo: { type: Number },
     Currency: { type: String },
     hasTableBooking: { type: String },

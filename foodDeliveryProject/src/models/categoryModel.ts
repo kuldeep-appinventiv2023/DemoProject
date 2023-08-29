@@ -17,5 +17,5 @@ const categorySchema = new mongoose.Schema({
 
 const Category = mongoose.model('category', categorySchema);
 console.log('Category model created...');
-module.exports = Category;
-export default mongoose.model<Category>('category', categorySchema);
+export default Category;
+// export default mongoose.model<Category>('category', categorySchema);

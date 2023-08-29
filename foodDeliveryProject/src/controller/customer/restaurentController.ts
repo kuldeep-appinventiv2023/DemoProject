@@ -75,6 +75,17 @@ class RestaurantController {
     }
   }
 
+  async getRestaurantsByCategory(req: Request, res: Response) {
+    const categoryName = req.query.categoryName; 
+    try {
+        const restaurants = await RestaurantService.getRestaurantsByCategoryName(categoryName);
+        res.status(200).json({ success: true, restaurants });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: Constants.errorMsgs.fetchRestaurantsError });
+    }
+  }
+
   async findRestaurantbyFilter(req: Request, res: Response) {
     const Latitude = parseFloat(req.query.Latitude as string);
     const Longitude = parseFloat(req.query.Longitude as string);

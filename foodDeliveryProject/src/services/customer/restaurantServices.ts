@@ -1,4 +1,5 @@
 import Restaurant from "../../models/restaurantModel";
+import Category from "../../models/categoryModel";
 import { Constants } from "../../constants";
 
 class RestaurantService {
@@ -47,6 +48,19 @@ class RestaurantService {
       throw new Error(Constants.errorMsgs.invalidCityName);
     }
   }
+
+  async getRestaurantsByCategoryName(categoryName) {
+    try {
+        const category:any = await Category.findOne({categoryName: categoryName});
+        console.log(category)
+        console.log(category.categoryName)
+        const restaurants = await Restaurant.find({categoryId: category._id});
+        return restaurants;
+    } catch (error) {
+        throw new Error(Constants.errorMsgs.fetchRestaurantsError);
+    }
+  }
+
 }
 
 export default new RestaurantService();

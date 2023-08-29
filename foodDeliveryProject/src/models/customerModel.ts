@@ -53,7 +53,7 @@ const customerSchema = new mongoose.Schema({
     updated_at: { type: Date, default: Date.now }
 });
 
-const Customer = mongoose.model('customer', customerSchema);
-console.log('Customer model created...');
-module.exports = Customer;
+// const Customer = mongoose.model('customer', customerSchema);
+// console.log('Customer model created...');
+// module.exports = Customer;
 export default mongoose.model<Customer>('customer', customerSchema);

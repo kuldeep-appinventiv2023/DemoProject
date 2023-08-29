@@ -1,4 +1,5 @@
 import Menu from "../../models/menuModel";
+import { Constants } from '../../constants';
 
 class MenuService {
   async getAllMenuItems() {
@@ -6,7 +7,7 @@ class MenuService {
       const allMenuItems = await Menu.find();
       return allMenuItems;
     } catch (error) {
-      throw new Error('Error fetching all menu items');
+      throw new Error(Constants.errorMsgs.fetchMenuItemsError);
     }
   }
 
@@ -14,20 +15,42 @@ class MenuService {
     try {
       const menuItem = await Menu.findById(menuItemId);
       if (!menuItem) {
-        throw new Error('Menu item not found');
+        throw new Error(Constants.errorMsgs.menuItemNotFound);
       }
       return menuItem;
     } catch (error) {
-      throw new Error('Error fetching menu item by ID');
+      throw new Error(Constants.errorMsgs.fetchMenuItemByIDError);
     }
   }
 
   async getMenuItemsByRestaurantName(restaurantName: string) {
     try {
-      const menuItems = await Menu.find({ restaurantName: { $regex: restaurantName, $options: 'i' } });
+      const menuItems = await Menu.aggregate([
+        {
+          $lookup: {
+            from: "categories",
+            localField: "categoryId",
+            foreignField: "_id",
+            as: "category",
+          },
+        },
+        {
+          $match: {
+            "category.restaurantName": restaurantName,
+          },
+        },
+        {
+          $project: {
+            _id: 1,
+            menuName: 1,
+            image: 1,
+          },
+        },
+      ]);
+
       return menuItems;
     } catch (error) {
-      throw new Error('Error fetching menu items by restaurant name');
+      throw new Error(Constants.errorMsgs.menuItemNotFound);
     }
   }
 
@@ -36,7 +59,7 @@ class MenuService {
       const menuItems = await Menu.find({ categoryId });
       return menuItems;
     } catch (error) {
-      throw new Error('Error fetching menu items by category');
+      throw new Error(Constants.errorMsgs.fetchMenuItemsByCategoryError);
     }
   }
 }

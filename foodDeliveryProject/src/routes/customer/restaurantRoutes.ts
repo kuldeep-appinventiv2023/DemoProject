@@ -8,5 +8,7 @@ customerRestaurantRouter.get('/viewAllRestaurant', authMiddleware, RestaurantCon
 customerRestaurantRouter.get('/viewRestaurantById', authMiddleware, RestaurantController.getRestaurantById);
 customerRestaurantRouter.get('/viewRestaurantByName', authMiddleware, RestaurantController.getRestaurantByName);
 customerRestaurantRouter.get('/viewRestaurantByCityName', authMiddleware, RestaurantController.getRestaurantByCityName);
+customerRestaurantRouter.get('/viewRestaurantByCategory', authMiddleware, RestaurantController.getRestaurantsByCategory);
+
 
 export default customerRestaurantRouter;

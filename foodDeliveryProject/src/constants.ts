@@ -51,12 +51,33 @@ export class Constants {
       "An error occurred while fetching menu items by restaurant",
     fetchMenuItemsByCategoryError:
       "An error occurred while fetching menu items by category",
-      
-  menuItemNotFound: 'Menu item not found',
-  fetchMenuItemByIDError: 'Error fetching menu item by ID',
-  createMenuItemError: 'Error creating menu item',
-  updateMenuItemError: 'Error updating menu item',
-  deleteMenuItemError: 'Error deleting menu item',
+
+    menuItemNotFound: "Menu item not found",
+    fetchMenuItemByIDError: "Error fetching menu item by ID",
+    createMenuItemError: "Error creating menu item",
+    updateMenuItemError: "Error updating menu item",
+    deleteMenuItemError: "Error deleting menu item",
+
+    INTERNAL_SERVER_ERROR: "An error occurred while processing your request",
+    ITEM_ADD_ERROR: "An error occurred while adding the item",
+    ITEM_UPDATE_ERROR: "Error updating item",
+    ITEM_DELETE_ERROR: "Error deleting item",
+    ITEM_FETCH_ERROR: "Error fetching items",
+    ITEM_GET_ERROR: "Error getting item",
+    ITEM_NOT_FOUND: "Item not found",
+
+    CART_NOT_FOUND: "Cart not found",
+    ERROR_ADDING_ITEM: "Error adding item to cart",
+    ERROR_FETCHING_CART: "Error fetching cart items",
+    ERROR_UPDATING_ITEM: "Error updating cart item",
+    ERROR_REMOVING_ITEM: "Error removing item from cart",
+
+    ORDER_NOT_FOUND: "Order not found",
+    CART_EMPTY: "Cart is empty",
+    ERROR_PLACING_ORDER: "Error placing order",
+    ERROR_FETCHING_ORDERS: "Error fetching orders",
+    ERROR_FETCHING_ORDER: "Error fetching order",
+    ERROR_CANCELLING_ORDER: "Error cancelling order",
 
     staffNotFound: "Delivery staff not found",
     errorUpdatingStaff: "An error occurred while updating the delivery staff",
@@ -91,6 +112,15 @@ export class Constants {
     menuItemsByRestaurantFetched:
       "Menu items fetched by restaurant successfully",
     menuItemsByCategoryFetched: "Menu items fetched by category successfully",
+
+    ITEM_ADDED_SUCCESS: "Item added successfully",
+    ITEM_UPDATED_SUCCESS: "Item updated successfully",
+    ITEM_DELETED_SUCCESS: "Item deleted successfully",
+
+    ITEM_REMOVED_SUCCESS: "Item removed from cart successfully",
+
+    ORDER_PLACED_SUCCESS: "Order placed successfully",
+    ORDER_CANCELLED_SUCCESS: "Order cancelled successfully",
 
     staffNotFound: "Delivery staff not found",
     staffAdded: "Delivery staff added successfully",

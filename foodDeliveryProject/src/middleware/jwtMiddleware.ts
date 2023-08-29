@@ -25,10 +25,6 @@ export async function authMiddleware(
     const admin = await Admin.findOne({ email: decoded.email });
 
     if (!admin) {
-      throw new Error(Constants.errorMsgs.unauthorized);
-    }
-
-    if (decoded.email !== admin.email) {
       const client = createClient();
       client.on("error", (error) => console.log("error"));
       await client.connect();
@@ -38,6 +34,7 @@ export async function authMiddleware(
       if (cachedData) {
         const customerData = JSON.parse(cachedData);
         if (customerData.isActive == true) {
+          req.body.customerId = decoded.id;
           next();
         } else {
           throw new Error(Constants.errorMsgs.sessionExpired);
@@ -49,6 +46,7 @@ export async function authMiddleware(
       next();
     }
   } catch (error) {
+    res.send(Constants.errorMsgs.error);
     throw new Error(Constants.errorMsgs.error);
   }
 }

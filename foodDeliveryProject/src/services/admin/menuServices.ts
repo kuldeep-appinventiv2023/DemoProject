@@ -14,7 +14,7 @@ class MenuService {
 
     async updateMenuItem(menuItemId: string, updateData: any) {
         try {
-            const updatedMenuItem = await Menu.findByIdAndUpdate(menuItemId, updateData, { new: true });
+            const updatedMenuItem = await Menu.findByIdAndUpdate({menuItemId}, {$set : {updateData}}, { new: true });
             return updatedMenuItem;
         } catch (error) {
             throw new Error(Constants.errorMsgs.updateMenuItemError);

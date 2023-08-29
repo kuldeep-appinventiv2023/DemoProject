@@ -1,15 +1,16 @@
 import mongoose, { Document, Schema } from "mongoose";
 
-interface cartItems {
-  itemId: Schema.Types.ObjectId; // item
-  quantity: number; // req.body
-  unit_price: number; // req.body
+interface CartItem {
+  itemId: Schema.Types.ObjectId;
+  quantity: number;
+  unit_price: number;
 }
 
 interface Cart extends Document {
   customerId: mongoose.Types.ObjectId;
-  items: cartItems;
+  items: CartItem[];
   cartTotal: number;
+  calculateTotal: () => void;
 }
 
 const cartSchema = new mongoose.Schema({
@@ -20,7 +21,7 @@ const cartSchema = new mongoose.Schema({
   },
   items: [
     {
-      itemId: { type: mongoose.Schema.Types.ObjectId, ref: "Item" },
+      itemId: { type: mongoose.Schema.Types.ObjectId, ref: "Item", required :true },
       quantity: { type: Number, required: true, default: 1 },
       unit_price: { type: Number },
     },
@@ -30,7 +31,7 @@ const cartSchema = new mongoose.Schema({
 
 cartSchema.methods.calculateTotal = function () {
   this.cartTotal = this.items.reduce(
-    ( total , item ) => total + item.quantity * item.unit_price,
+    (total : any , item : any) => total + item.quantity * item.unit_price,
     0
   );
 };

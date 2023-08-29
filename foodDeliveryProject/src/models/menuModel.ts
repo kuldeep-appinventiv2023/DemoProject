@@ -3,22 +3,17 @@ import { Document, Schema } from "mongoose";
 
 interface Menu extends Document {
   categoryId: mongoose.Types.ObjectId;
-  itemName: string;
-  price: mongoose.Types.Decimal128;
+  menuName: string;
   image: Buffer;
-  isAvailable: boolean;
 }
 
 const menuSchema = new mongoose.Schema({
   categoryId: {
     type: Schema.Types.ObjectId,
-    ref: "categpries",
-    required: true,
+    ref: "categories", required: true
   },
-  itemName: { type: String, required: true },
-  price: { type: mongoose.Types.Decimal128, required: true },
-  image: { type: Buffer },
-  isAvailable: { type: String, required: true },
+  menuName: { type: String, required: true },
+  image: { type: Buffer }
 });
 
 const Menu = mongoose.model("menu", menuSchema);
