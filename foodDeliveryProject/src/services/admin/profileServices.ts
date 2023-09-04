@@ -6,7 +6,7 @@ import { Constants } from '../../constants';
 
 class AdminServices {
     async loginAdmin(email: string, password: string) {
-        const admin: any = await Admin.findOne({ email });
+        const admin : any = await Admin.findOne({ email });
 
         if (!admin) {
             throw new Error(Constants.errorMsgs.adminNotFound);
@@ -17,10 +17,7 @@ class AdminServices {
             throw new Error(Constants.errorMsgs.invalidPassword);
         }
 
-        const token = jwt.sign({ email: admin.email, id: admin._id }, secretKey, {
-            expiresIn: '1h',
-        });
-
+        const token = jwt.sign({ email: admin.email, id: admin._id }, secretKey, {expiresIn: '1h'});
         return token;
     }
 

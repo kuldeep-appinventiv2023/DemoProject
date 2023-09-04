@@ -59,7 +59,8 @@ class AdminProfileController {
     }
 
     async forgetPassword(req: Request, res: Response) {
-        const { email, superAdminEmail, newPassword } = req.body;
+        const email = req.body.email;
+        const { superAdminEmail, newPassword } = req.body;
         const result = await AdminServices.resetAdminPassword(email, superAdminEmail, newPassword);
         if (result.success) {
             res.json({ message: result.message, token: result.token });

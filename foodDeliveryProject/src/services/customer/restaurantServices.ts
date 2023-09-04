@@ -3,30 +3,31 @@ import Category from "../../models/categoryModel";
 import { Constants } from "../../constants";
 
 class RestaurantService {
-  async getAllRestaurants(ipage:any,perPage:any) {
+  async getAllRestaurants(pageNumber:any,perPage:any) {
     try {
-      const restaurants = await Restaurant.find()
-      .skip((ipage - 1) * perPage)
-      .limit(perPage);
-      if (restaurants.length === 0) {
+      const restaurants = await Restaurant.find().skip((pageNumber - 1) * perPage).limit(perPage);
+
+      if (!restaurants) {
         throw new Error(Constants.errorMsgs.restaurantNotFound);
-      } else {
+      } 
+      else {
         return restaurants;
       }
-    } catch (error) {
+    } 
+    catch (error) {
       console.log(error);
     }
   }
 
   async getRestaurantById(restaurantId: any) {
-    console.log(restaurantId);
     try {
       const restaurant = await Restaurant.findOne({restaurantId});
       if (!restaurant) {
         throw new Error(Constants.errorMsgs.restaurantNotFound);
       }
       return restaurant;
-    } catch (error) {
+    } 
+    catch (error) {
       throw new Error(Constants.errorMsgs.invalidRestaurantId);
     }
   }
@@ -35,7 +36,8 @@ class RestaurantService {
     try {
       const restaurants = await Restaurant.find({restaurantName});
       return restaurants;
-    } catch (error) {
+    } 
+    catch (error) {
       throw new Error(Constants.errorMsgs.invalidRestaurantName);
     }
   }
@@ -44,7 +46,8 @@ class RestaurantService {
     try {
       const restaurants = await Restaurant.find({ City });  
       return restaurants;
-    } catch (error) {
+    } 
+    catch (error) {
       throw new Error(Constants.errorMsgs.invalidCityName);
     }
   }
@@ -56,11 +59,11 @@ class RestaurantService {
         console.log(category.categoryName)
         const restaurants = await Restaurant.find({categoryId: category._id});
         return restaurants;
-    } catch (error) {
+    } 
+    catch (error) {
         throw new Error(Constants.errorMsgs.fetchRestaurantsError);
     }
   }
-
 }
 
 export default new RestaurantService();

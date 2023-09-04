@@ -4,13 +4,24 @@ import { Constants } from '../../constants';
 
 class DeliveryStaffController {
     async add(req: Request, res: Response) {
-        const newDeliveryStaffData = req.body;
+        const {firstName, lastName, password, contactNumber,  deliveryEmail} = req.body;
         try {
-            const newDeliveryStaff = await DeliveryStaffService.addDeliveryStaff(newDeliveryStaffData);
+            const newDeliveryStaff = await DeliveryStaffService.addDeliveryStaff(firstName, lastName, password, contactNumber,  deliveryEmail);
             res.status(201).json({ success: true, message: Constants.successMsgs.staffAdded, deliveryStaff: newDeliveryStaff });
         } catch (error) {
             console.log(error);
             res.status(500).json({ success: false, message: Constants.errorMsgs.errorAddingStaff });
+        }
+    }
+
+    async login(req: Request, res: Response) {
+        const { email, password } = req.body;
+        try {
+            const token = await DeliveryStaffService.login(email, password);
+            res.status(200).json({ success: true, token });
+        } catch (error) {
+            console.log(error);
+            res.status(401).json({ success: false, message: Constants.errorMsgs.loginFailed });
         }
     }
 

@@ -16,7 +16,8 @@ class CustomerController {
                 message: Constants.successMsgs.customerRegistered,
                 customer: newCustomer,
             });
-        } catch (error: any) {
+        } 
+        catch (error: any) {
             console.log(error);
             if (error.message === Constants.errorMsgs.customerExists) {
                 res.status(400).json({ success: false, message: error.message });
@@ -30,8 +31,13 @@ class CustomerController {
         const { email, password } = req.body;
 
         try {
-            const token = await CustomerService.login(email, password);
-            res.status(200).json({ success: true, message: Constants.successMsgs.loginSuccess, token });
+            const result = await CustomerService.login(email, password);
+            if(result.customer){
+                res.status(200).json({ success: true, message: Constants.successMsgs.loginSuccess, result });
+            }
+            else {
+                res.status(400).json({ success: false, message: Constants.errorMsgs.alreadyLoggedIn });
+            }
         } catch (error) {
           console.log(error);
             res.status(401).json({ success: false, message: Constants.errorMsgs.loginFailed });
@@ -46,7 +52,7 @@ class CustomerController {
             res.status(200).json({ success: true, customer });
         } catch (error) {
           console.log(error);
-            res.status(401).json({ success: false, message: Constants.errorMsgs.customerNotFound });
+          res.status(401).json({ success: false, message: Constants.errorMsgs.customerNotFound });
         }
     }
 
@@ -86,8 +92,8 @@ class CustomerController {
     }
 
     async forgetPassword(req: Request, res: Response) {
-        const { email, favoriteFood, newPassword } = req.body;
-
+        const email = req.body.email;
+        const {favoriteFood, newPassword } = req.body;
         try {
             const result = await CustomerService.forgetPassword(email, favoriteFood, newPassword);
 

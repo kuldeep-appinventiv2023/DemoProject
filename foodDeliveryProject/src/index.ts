@@ -29,9 +29,10 @@ const app = express();
 app.use(express.json());
 
 connectToDatabase();
-const swaggerDocument = YAML.load(path.join(__dirname, '../swagger.yaml'));
 
+const swaggerDocument = YAML.load(path.join(__dirname, '../swagger.yaml'));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 app.use(
   adminRouter,
   customerRouter,

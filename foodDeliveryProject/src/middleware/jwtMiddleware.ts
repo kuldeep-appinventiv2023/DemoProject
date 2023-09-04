@@ -35,6 +35,7 @@ export async function authMiddleware(
         const customerData = JSON.parse(cachedData);
         if (customerData.isActive == true) {
           req.body.customerId = decoded.id;
+          req.body.email = decoded.email;
           next();
         } else {
           throw new Error(Constants.errorMsgs.sessionExpired);

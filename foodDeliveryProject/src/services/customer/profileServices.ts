@@ -70,9 +70,10 @@ class CustomerService {
             const redisKey = `customer:${payload.customerId}`;
             await setToRedis(redisKey, JSON.stringify(payload));
             await session.save();
-            return token;
-        } else {
-            return { message: Constants.errorMsgs.customerNotFound };
+            return ({customer, token});
+        } 
+        else {
+            return { message: Constants.errorMsgs.alreadyLoggedIn };
         }
     }
 
@@ -82,7 +83,9 @@ class CustomerService {
             if (!customer) {
                 throw new Error(Constants.errorMsgs.customerNotFound);
             }
-            return customer;
+            else{
+                return customer;
+            }
         } catch (error) {
             throw new Error(Constants.errorMsgs.customerNotFound);
         }

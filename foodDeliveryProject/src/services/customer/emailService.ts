@@ -32,7 +32,7 @@ export async function sendVerifyMail(name: string, email: string, customer_id: s
     }
 }
 
-export async function sendOrderMail(name: string, email: string) {
+export async function sendOrderMailWithOTP(name: string, email: string, otp: string) {
     try {
         const transporter = nodemailer.createTransport({
             service: 'gmail',
@@ -45,9 +45,9 @@ export async function sendOrderMail(name: string, email: string) {
         const mailOptions = {
             from: process.env.EMAIL,
             to: email,
-            subject: 'Verification Mail',
-            html: `<p>Hii ${name}, <br> Your order has been confirmed.</p>`,
-        };
+            subject: 'Order Confirmation',
+            html: `<p>Hii ${name}, <br> Your order has been confirmed. Your OTP is: <strong>${otp}</strong></p>`,
+          };
 
         transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
@@ -59,5 +59,17 @@ export async function sendOrderMail(name: string, email: string) {
         });
     } catch (error : any) {
         console.log(error.message);
-    }
+    }  
 }
+
+export function generateOTP() {
+    const digits = '0123456789';
+    let otp = '';
+  
+    for (let i = 0; i < 6; i++) {
+      const randomIndex = Math.floor(Math.random() * digits.length);
+      otp += digits[randomIndex];
+    }
+  
+    return otp;
+}  

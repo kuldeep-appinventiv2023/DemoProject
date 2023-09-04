@@ -7,7 +7,9 @@ export class Constants {
     sessionExpired: "Session expired / Customer logged out",
 
     loginFailed: "Login failed",
-    adminNotFound: "User not found",
+    alreadyLoggedIn : "User is already logged in please logout frpm other device",
+    adminNotFound: "Admin not found",
+    deliveryStaffNotFound: "delivery boy not found",
     deleteFailed: "Failed to delete admin profile",
     securityFailed: "Security question failed",
     somethingWentWrong: "Something went wrong",
@@ -78,7 +80,9 @@ export class Constants {
     ERROR_FETCHING_ORDERS: "Error fetching orders",
     ERROR_FETCHING_ORDER: "Error fetching order",
     ERROR_CANCELLING_ORDER: "Error cancelling order",
+    ERROR_DELIVERING_ORDER: "Error during order delivery",
 
+    staffExists: "Delivery staff already exists. Please login.",
     staffNotFound: "Delivery staff not found",
     errorUpdatingStaff: "An error occurred while updating the delivery staff",
     errorDeletingStaff: "An error occurred while deleting the delivery staff",
@@ -121,6 +125,7 @@ export class Constants {
 
     ORDER_PLACED_SUCCESS: "Order placed successfully",
     ORDER_CANCELLED_SUCCESS: "Order cancelled successfully",
+    ORDER_DELIVERED_SUCCESS: "Order delivered successfully",
 
     staffNotFound: "Delivery staff not found",
     staffAdded: "Delivery staff added successfully",

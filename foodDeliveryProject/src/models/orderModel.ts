@@ -41,7 +41,7 @@ const ordersSchema = new mongoose.Schema({
   customerId: { type: Schema.Types.ObjectId, ref: "customers"},
   resturantId: { type: Schema.Types.ObjectId, ref: "restaurants"},
   staffId: { type: Schema.Types.ObjectId, ref: "deliveryStaffs"},
-  status: { type: String, enum: Object.values(OrderStatus) },
+  status: { type: String, enum: Object.values(OrderStatus), default : 'pending' },
   orderTotal: { type: Number },
   shippingAddress: { type: shippingAddressSchema},
   placeOrderDate: { type: Date, default: Date.now },

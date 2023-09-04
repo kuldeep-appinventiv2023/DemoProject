@@ -17,7 +17,6 @@ async function main() {
                 const dataToInsert = {
                     field1: row.csv_field1,
                     field2: row.csv_field2,
-                    // Add more fields as needed
                 };
                 await collection.insertOne(dataToInsert);
             })
