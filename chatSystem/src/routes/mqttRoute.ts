@@ -4,10 +4,10 @@ import  { startChatting , getChatOfUser , addReactionToMessage, deleteMessageCon
 
 const mqttRouter = express.Router();
 
-mqttRouter.post('/startChatting', authMiddleware, startChatting);
-mqttRouter.get('/getChatOfUser', authMiddleware, getChatOfUser);
-mqttRouter.post('/addReactionToMessage', authMiddleware, addReactionToMessage);
-mqttRouter.delete('/deleteMessage', authMiddleware, deleteMessageController);
+mqttRouter.post('/initiateChat', authMiddleware, startChatting);
+mqttRouter.get('/fetchChatHistory', authMiddleware, getChatOfUser);
+mqttRouter.patch('/reactToMessage', authMiddleware, addReactionToMessage);
+mqttRouter.delete('/deleteChatMessage', authMiddleware, deleteMessageController);
 
 
 export default  mqttRouter;

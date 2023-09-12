@@ -185,7 +185,7 @@ export async function addReactionToMessage(req: Request, res: Response) {
       { $set: { "message.$.messageReaction": reaction } }
     );
 
-    res.status(Constants.HttpStatusCodes.OK).json({ success: true, message:  Constants.successMessages.MessageAddedToExistingChat });
+    res.status(Constants.HttpStatusCodes.OK).json({ success: true, message:  Constants.successMessages.ReactionAddedToMessage });
   } 
   catch (error) {
     res.status(Constants.HttpStatusCodes.InternalServerError).json({ success: false, message: Constants.errorMsgs.error });
