@@ -141,7 +141,7 @@ export async function getChatOfUser(req: Request, res: Response) {
       },
       { $unwind: "$message" }, 
       { $sort: { "message.createdAt": -1 } }, 
-      { $group: { _id: "$_id", senderId: { $first: "$senderId" }, receiverId: { $first: "$receiverId" }, topic: { $first: "$topic" }, name: { $first: "$name" }, created_at: { $first: "$created_at" }, messages: { $push: "$message" } } }, 
+      { $group: { _id: "$_id", senderId: { $first: "$senderId" }, receiverId: { $first: "$receiverId" }, topic: { $first: "$topic" }, created_at: { $first: "$created_at" }, messages: { $push: "$message" } } }, 
       { $skip: (page - 1) * perPage },
       { $limit: perPage },
     ]);
@@ -197,23 +197,26 @@ export async function deleteMessageController(req: Request, res: Response) {
   const senderId = req.body.id;
 
   try {
-    const chat : any = await Chat.findOne({ _id : chatId, "message._id" : messageId });
-
+    const chat : any = await Chat.findOne({ _id : chatId, 'message._id' : messageId });
+    console.log(chat)
     if (!chat) {
       res.status(Constants.HttpStatusCodes.NotFound).json({ success: false, message: Constants.errorMsgs.ChatOrMessageNotFound });
     }
-
-    if (chat.senderId !== senderId) {
-      res.status(Constants.HttpStatusCodes.Unauthorized).json({ success: false, message: Constants.errorMsgs.UnauthorizedPerson });
-    }
-
-    const result = await Chat.updateOne(
-      { _id: chatId },
-      { $pull: { message : { _id: messageId } } }
-    );
-
-    res.status(Constants.HttpStatusCodes.OK).json({ success: true, message: Constants.successMessages.MessageDeletedSuccessfully, result});
-
+    else
+    {
+      console.log(senderId);
+      if (chat.senderId != senderId) {
+        res.status(Constants.HttpStatusCodes.Unauthorized).json({ success: false, message: Constants.errorMsgs.UnauthorizedPerson });
+      }
+     
+        const result = await Chat.updateOne(
+          { _id: chatId },
+          { $pull: { message : { _id: messageId } } }
+        );
+    
+        res.status(Constants.HttpStatusCodes.OK).json({ success: true, message: Constants.successMessages.MessageDeletedSuccessfully, result});    
+  }
+    
   } 
   catch (error) {
     res.status(Constants.HttpStatusCodes.InternalServerError).json({ success: false, message: Constants.errorMsgs.error });
